@@ -1,0 +1,22 @@
+{
+  "template": "https://github.com/njrenaissance/project-templates",
+  "commit": "f8e9e956928aedba73335d1a6a8d4263d6d0ebc2",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "project_name": "argparslib",
+      "project_slug": "argparslib",
+      "author": "jonphilnj@gmail.com",
+      "python_version": "3.12",
+      "app_config": "no",
+      "structured_logging": "no",
+      "telemetry": "no",
+      "security": "no",
+      "coding_factory": "yes",
+      "diagrams": "no",
+      "_template": "https://github.com/njrenaissance/project-templates",
+      "_commit": "f8e9e956928aedba73335d1a6a8d4263d6d0ebc2"
+    }
+  },
+  "directory": "basic"
+}
