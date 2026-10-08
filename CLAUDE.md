@@ -10,7 +10,6 @@ Cross-cutting concerns enabled for this project:
 - Structured logging (`structlog`): disabled
 - Telemetry (OpenTelemetry): disabled
 - Security scanning (`bandit`): disabled
-- Coding-factory launchers (Scrum Master): enabled
 - Diagramming (`diagrams` library): disabled
 
 ## Imports

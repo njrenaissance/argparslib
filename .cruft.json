@@ -1,6 +1,6 @@
 {
   "template": "https://github.com/njrenaissance/project-templates",
-  "commit": "f8e9e956928aedba73335d1a6a8d4263d6d0ebc2",
+  "commit": "7ba318aedd6c9c7e6290d3775e0ab0f1e4006661",
   "checkout": null,
   "context": {
     "cookiecutter": {
@@ -12,10 +12,9 @@
       "structured_logging": "no",
       "telemetry": "no",
       "security": "no",
-      "coding_factory": "yes",
       "diagrams": "no",
       "_template": "https://github.com/njrenaissance/project-templates",
-      "_commit": "f8e9e956928aedba73335d1a6a8d4263d6d0ebc2"
+      "_commit": "7ba318aedd6c9c7e6290d3775e0ab0f1e4006661"
     }
   },
   "directory": "basic",
