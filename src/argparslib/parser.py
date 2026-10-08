@@ -18,7 +18,7 @@ class Flag:
 
 
 class Parser:
-    """Parses boolean flags of the form ``--name`` or ``-n``."""
+    """Parses boolean flags of the form ``--name``, ``-n`` or combined ``-nm``."""
 
     def __init__(self) -> None:
         self._flags: list[Flag] = []
@@ -40,8 +40,16 @@ class Parser:
         """
         result = {flag.name: flag.default for flag in self._flags}
         for token in args:
-            flag = self._flags_by_token.get(token)
-            if flag is None:
-                raise UnknownFlagError(f"unknown flag '{token}'")
-            result[flag.name] = True
+            for flag_token in self._split_combined_short_flags(token):
+                flag = self._flags_by_token.get(flag_token)
+                if flag is None:
+                    raise UnknownFlagError(f"unknown flag '{flag_token}'")
+                result[flag.name] = True
         return result
+
+    def _split_combined_short_flags(self, token: str) -> list[str]:
+        """Expand a group such as ``-vd`` into ``["-v", "-d"]``; any other token is returned unchanged."""
+        is_short_group = token.startswith(SHORT_PREFIX) and not token.startswith(LONG_PREFIX) and len(token) > 1
+        if token in self._flags_by_token or not is_short_group:
+            return [token]
+        return [SHORT_PREFIX + letter for letter in token[len(SHORT_PREFIX) :]]

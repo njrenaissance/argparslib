@@ -127,3 +127,9 @@ def test_long_flag_is_not_split(parser: Parser) -> None:
 @pytest.mark.unit
 def test_long_flag_still_matches_as_one_token(parser: Parser) -> None:
     assert parser.parse(["--verbose"]) == {"verbose": True, "debug": False}
+
+
+@pytest.mark.unit
+def test_bare_dash_is_unknown_flag(parser: Parser) -> None:
+    with pytest.raises(UnknownFlagError, match="unknown flag '-'"):
+        parser.parse(["-"])
