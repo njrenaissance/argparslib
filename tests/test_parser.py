@@ -87,3 +87,43 @@ def test_flag_without_short_form_rejects_short_token() -> None:
 
     with pytest.raises(UnknownFlagError, match="unknown flag '-v'"):
         flag_parser.parse(["-v"])
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("token", [pytest.param("-vd", id="vd"), pytest.param("-dv", id="dv")])
+def test_combined_short_flags_set_each_flag(parser: Parser, token: str) -> None:
+    assert parser.parse([token]) == {"verbose": True, "debug": True}
+
+
+@pytest.mark.unit
+def test_combined_short_flags_order_does_not_matter(parser: Parser) -> None:
+    assert parser.parse(["-dv"]) == parser.parse(["-vd"])
+
+
+@pytest.mark.unit
+def test_combined_group_equals_separate_flags(parser: Parser) -> None:
+    assert parser.parse(["-vd"]) == parser.parse(["-v", "-d"])
+
+
+@pytest.mark.unit
+def test_repeated_letter_sets_flag_once(parser: Parser) -> None:
+    assert parser.parse(["-vv"]) == {"verbose": True, "debug": False}
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("token", [pytest.param("-vx", id="unknown_last"), pytest.param("-xv", id="unknown_first")])
+def test_unknown_letter_in_group_raises(parser: Parser, token: str) -> None:
+    with pytest.raises(UnknownFlagError, match="unknown flag '-x'") as error:
+        parser.parse([token])
+    assert isinstance(error.value, ValueError)
+
+
+@pytest.mark.unit
+def test_long_flag_is_not_split(parser: Parser) -> None:
+    with pytest.raises(UnknownFlagError, match="unknown flag '--vd'"):
+        parser.parse(["--vd"])
+
+
+@pytest.mark.unit
+def test_long_flag_still_matches_as_one_token(parser: Parser) -> None:
+    assert parser.parse(["--verbose"]) == {"verbose": True, "debug": False}
